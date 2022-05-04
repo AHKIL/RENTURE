@@ -211,9 +211,9 @@ if st.session_state['state'] == 'home':
         arr=st.columns([1]*col)
         for j in range(col):
             arr[j].image(st.session_state['chached_books'][(i*col+j)]["book_location"][0],width=200)
-            arr[j].markdown(f'''{arr[(i*col+j)]["Book name"]}<br>
+            arr[j].markdown(f'''{st.session_state['chached_books'][(i*col+j)]["Book name"]}<br>
             {random.choice(rating_arr)} {str(random.randint(500,5000))} <br>
-            Rent Price:  <span style="color:green">₹{arr[(i*col+j)]["Rent price"]}</span>''',True)
+            Rent Price:  <span style="color:green">₹{st.session_state['chached_books'][(i*col+j)]["Rent price"]}</span>''',True)
             arr[j].button('Rent/Buy',key=str(i)+str(j),on_click=state_change,args=(i,j))
         st.title('')
     arr=st.columns([1]*col)
@@ -290,12 +290,12 @@ if st.session_state['state'] == 'seller':
                         blob.upload_from_string(imag.getvalue(), content_type="image/jpeg")
                         dic['book_location'].append(storage_py.child(could_filename).get_url(None))
                     db.collection('Costumers').document(st.session_state['user_details']['email']).collection('Uploaded Books').add(dic)
-                st.success('Upload successfull')
-                books_arr=[]
-                get_books = db.collection_group('Uploaded Books')
-                docs = get_books.stream()
-                for doc in docs:
-                    books_arr.append(doc.to_dict())
-                st.session_state['chached_books'] = books_arr
+                    st.success('Upload successfull')
+                    books_arr=[]
+                    get_books = db.collection_group('Uploaded Books')
+                    docs = get_books.stream()
+                    for doc in docs:
+                        books_arr.append(doc.to_dict())
+                    st.session_state['chached_books'] = books_arr
             except Exception as e:
                 st.error(json.loads(e.args[1])['error']['message'].replace('_', ' '))
