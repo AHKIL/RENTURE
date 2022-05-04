@@ -28,7 +28,7 @@ firebaseConfig = {
 }
 
 firebase = pyrebase.initialize_app(firebaseConfig) 
-cred = credentials.Certificate(st.secrets)
+cred = credentials.Certificate(dict(st.secrets))
 
 if 'auth' not in st.session_state:
     st.session_state['auth'] = firebase.auth()
