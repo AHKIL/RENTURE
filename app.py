@@ -12,6 +12,7 @@ from firebase_admin import firestore
 from firebase_admin import storage
 import pyrebase
 import requests
+import toml
 
 st.set_page_config(layout="wide",page_title="RENTURE")
 hide_st_style = """<style>#MainMenu {visibility: hidden;} footer {visibility: hidden;} header {visibility: hidden;}</style>"""
@@ -132,9 +133,6 @@ def signin():
         st.text_input('Password',key = 'password_signin', placeholder = 'Password',type='password')
         st.button('Sign in', on_click= user_signin)
 
-if len(st.session_state['user_custom_details']) == 0:
-    st.session_state['user_custom_details'] = db.collection('Costumers').document(st.session_state['user_details']['email']).get().to_dict()
-
 if st.session_state['user_details'] == None:
     if st.session_state['Login_status'] == 'Sign in':
         signin()
@@ -142,6 +140,8 @@ if st.session_state['user_details'] == None:
         signup()
     st.stop()
 
+if len(st.session_state['user_custom_details']) == 0:
+    st.session_state['user_custom_details'] = db.collection('Costumers').document(st.session_state['user_details']['email']).get().to_dict()
 # # st.markdown(hide_st_style, unsafe_allow_html=True)
 arr1 = st.columns([1,2,.2,.4,.25,.25])
 arr1[0].title('RENTURE')
