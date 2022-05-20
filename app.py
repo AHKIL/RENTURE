@@ -2,7 +2,6 @@ import glob
 import json
 import os
 import random
-from numpy import place
 import streamlit as st
 from streamlit_option_menu import option_menu
 from PIL import Image
